@@ -186,8 +186,8 @@ sub terms_indexed_for_field {
     my $uid = $self->uid;
     return $self->model->view->domain( $uid->index )->type( $uid->type )
         ->filterb( _id => $uid->id )
-        ->facets( field => { terms => { field => $field, size => 20 } } )
-        ->size(0)->search->facet('field');
+        ->aggs( field => { terms => { field => $field, size => 20 } } )
+        ->size(0)->search->agg('field');
 }
 
 1;

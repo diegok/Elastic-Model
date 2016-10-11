@@ -43,8 +43,7 @@ isa_ok my $results = $view->cached_search, 'Elastic::Model::Results';
 
 SKIP: {
     $store_search = 0;
-    skip "CHI not available for testing", 26
-        unless eval { require CHI };
+    skip "CHI not available for testing", 26 unless eval { require CHI };
     isa_ok my $cache = CHI->new( driver => 'Memory', global => 1 ),
         'CHI::Driver';
     ok $view = $view->cache($cache), 'Set cache';
@@ -58,6 +57,7 @@ SKIP: {
     is $results->total, 196, 'Total is OK';
     is $store_search, 1, 'From cache';
 
+    skip "delete_by_query() not supported on 2.x without the plugin", 16 unless $ENV{ES_DELETE_BY_QUERY} || $ENV{ES_CLIENT_VERSION} < 2;
     ok $model->view->domain('myapp2')->delete, 'Delete users in myapp2';
     is $domain->view->search->total, '65', 'Total now 65';
     is $store_search, 2, 'From index';
@@ -83,7 +83,6 @@ SKIP: {
     isa_ok $results = $view->cached_search, 'Elastic::Model::Results::Cached';
     is $results->total, 0, 'Total is refreshed';
     is $store_search, 4, 'From cache';
-
 }
 
 done_testing;

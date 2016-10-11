@@ -28,7 +28,6 @@ our @mapping = (
     options => {
         dynamic        => "true",
         include_in_all => 0,
-        path           => "full",
         properties     => {
             bar => { type => "string" },
             foo => {

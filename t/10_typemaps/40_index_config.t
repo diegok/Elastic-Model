@@ -28,7 +28,7 @@ cmp_deeply $good->index_config(
     mappings => {
         all_opts => {
             _all       => { enabled => 0 },
-            _timestamp => { enabled => 1, path => "timestamp" },
+            _timestamp => { enabled => 1 },
             dynamic           => "strict",
             numeric_detection => 1,
             properties        => {
@@ -72,7 +72,7 @@ cmp_deeply $good->index_config( types => ['no_analyzer'] ),
     mappings => {
         no_analyzer => {
             _all       => { enabled => 0 },
-            _timestamp => { enabled => 1, path => "timestamp" },
+            _timestamp => { enabled => 1 },
             dynamic           => "strict",
             numeric_detection => 1,
             properties        => {
@@ -91,7 +91,7 @@ cmp_deeply $good->index_config(),
     mappings => {
         all_opts => {
             _all       => { enabled => 0 },
-            _timestamp => { enabled => 1, path => "timestamp" },
+            _timestamp => { enabled => 1 },
             dynamic           => "strict",
             numeric_detection => 1,
             properties        => {
@@ -106,7 +106,7 @@ cmp_deeply $good->index_config(),
         },
         no_analyzer => {
             _all       => { enabled => 0 },
-            _timestamp => { enabled => 1, path => "timestamp" },
+            _timestamp => { enabled => 1 },
             dynamic           => "strict",
             numeric_detection => 1,
             properties        => {

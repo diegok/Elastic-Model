@@ -31,7 +31,6 @@ has_type 'Elastic::Model::Types::UID',
         type       => 'object',
         dynamic    => 'strict',
         properties => \%props,
-        path       => 'full'
     );
 
     };
@@ -105,7 +104,6 @@ via L<Elastic::Model::UID/"new_from_store()">. It is mapped as:
     {
         type        => 'object',
         dynamic     => 'strict',
-        path        => 'path',
         properties  => {
             index   => {
                 type  => 'string',

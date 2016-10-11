@@ -85,11 +85,9 @@ sub index_doc  { shift->_write_doc( 'index',  @_ ) }
 sub _write_doc {
 #===================================
     my ( $self, $action, $uid, $data, %args ) = @_;
-    return $self->es->$action(
-        body => $data,
-        %{ $uid->write_params },
-        %args
-    );
+    my %action_args = ( body => $data, %{ $uid->write_params }, %args );
+    delete $action_args{version} if exists $action_args{version} && !$action_args{version};
+    return $self->es->$action( %action_args );
 }
 
 #===================================
@@ -239,7 +237,6 @@ sub bootstrap_uniques {
                 _default_ => {
                     _all    => { enabled => 0 },
                     _source => { enabled => 0 },
-                    _type   => { index   => 'no' },
                     enabled => 0,
                 }
             }

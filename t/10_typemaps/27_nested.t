@@ -27,7 +27,6 @@ our @mapping = (
         include_in_all    => 0,
         include_in_root   => 1,
         include_in_parent => 1,
-        path              => "full",
         properties        => {
             bar => { type => "string" },
             foo => {

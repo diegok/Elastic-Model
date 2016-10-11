@@ -17,16 +17,21 @@ if ( $ENV{ES} ) {
     $es = Search::Elasticsearch->new(
         nodes    => $ENV{ES},
         trace_to => $trace,
-        client   => '1_0::Direct'
+        client   => '2_0::Direct'
     );
-    my ($version) = ( $es->info->{version}{number} =~ /^(\d+)/ );
-    if ( $version < 1 ) {
+
+    # Fallback for old servers/drivers
+    my ($version) = $es->info->{version}{number} =~ /^(\d+)/;
+    $ENV{ES_CLIENT_VERSION} = $version;
+    if ( my $client = $version < 1 ? '0_90::Direct' : $version < 2 ? '1_0::Direct' : 0 ) {
+        diag "Selected client: $client";
         $es = Search::Elasticsearch->new(
             nodes    => $ENV{ES},
             trace_to => $trace,
-            client   => '0_90::Direct',
+            client   => $client,
         );
     }
+
     eval { $es->ping } or do {
         diag $@;
         undef $es;

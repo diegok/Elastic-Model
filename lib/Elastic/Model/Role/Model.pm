@@ -155,7 +155,7 @@ has 'current_scope' => (
 
 #===================================
 sub _build_store { $_[0]->store_class->new( es => $_[0]->es ) }
-sub _build_es { Search::Elasticsearch->new( client => '1_0::Direct' ) }
+sub _build_es { Search::Elasticsearch->new( client => '2_0::Direct' ) }
 #===================================
 
 #===================================
@@ -638,7 +638,8 @@ sub map_class {
         %{ $meta->mapping },
         $self->typemap->class_mapping($class),
         dynamic           => 'strict',
-        _timestamp        => { enabled => 1, path => 'timestamp' },
+        #TODO: replace this for a real timestamp field on Doc as it's removed on 5.x
+        _timestamp        => { enabled => 1 }, #, path => 'timestamp' },
         numeric_detection => 1,
     );
     delete $mapping{type};
@@ -660,7 +661,7 @@ __END__
     use MyApp;
 
     my $es         = Search::Elasticsearch->new(
-        client => '1_0::Direct',
+        client => '2_0::Direct',
         nodes  => 'es.domain.com:9200'
     );
     my $model      = MyApp->new( es => $es );

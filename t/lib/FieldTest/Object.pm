@@ -53,7 +53,6 @@ has 'options_attr' => (
     is               => 'ro',
     isa              => 'Bar',
     'dynamic'        => 'true',
-    'path'           => 'full',
     'include_in_all' => 0,
 );
 

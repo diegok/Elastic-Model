@@ -88,9 +88,9 @@ sub index_count {
         @_,
         size => 0,
         body => {
-            facets => { index => { terms => { field => 'user.uid.index' } } }
+            aggs => { index => { terms => { field => 'user.uid.index' } } }
         }
-    )->{facets}{index}{terms};
-    return +{ map { $_->{term} => $_->{count} } @$terms };
+    )->{aggregations}{index}{buckets};
 
+    return +{ map { $_->{key} => $_->{doc_count} } @$terms };
 }

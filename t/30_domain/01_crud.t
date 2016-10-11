@@ -210,14 +210,12 @@ isa_ok $user = $domain->get( user => 1 ), 'MyApp::User', 'User';
 
 is_deeply $user->terms_indexed_for_field('email'),
     {
-    _type   => "terms",
-    missing => 0,
-    other   => 0,
-    terms   => [
-        { count => 1, term => "foo.com" },
-        { count => 1, term => "clint" },
-    ],
-    total => 2,
+        buckets => [
+          { doc_count => 1, key => "clint" },
+          { doc_count => 1, key => "foo.com" },
+        ],
+        doc_count_error_upper_bound => 0,
+        sum_other_doc_count => 0,
     },
     'Terms indexed for field';
 

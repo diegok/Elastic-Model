@@ -15,6 +15,7 @@ use MooseX::Types -declare => [ qw(
         CoreFieldType
         DynamicMapping
         ES
+        ES_2x
         ES_1x
         ES_90
         FieldType
@@ -27,7 +28,6 @@ use MooseX::Types -declare => [ qw(
         Longitude
         MultiField
         MultiFields
-        PathMapping
         Replication
         SortArgs
         StoreMapping
@@ -55,8 +55,6 @@ my @enums = (
     [ 'analyzed', 'not_analyzed', 'no' ],
     DynamicMapping,
     [ 'false', 'strict', 'true' ],
-    PathMapping,
-    [ 'just_name', 'full' ],
     Replication,
     [ 'sync', 'async' ],
     Consistency,
@@ -73,11 +71,12 @@ while ( my $type = shift @enums ) {
     );
 }
 
+class_type ES_2x, { class => 'Search::Elasticsearch::Client::2_0::Direct' };
 class_type ES_1x, { class => 'Search::Elasticsearch::Client::1_0::Direct' };
 class_type ES_90, { class => 'Search::Elasticsearch::Client::0_90::Direct' };
 
 #===================================
-subtype ES(), as ES_1x | ES_90;
+subtype ES(), as ES_2x | ES_1x | ES_90;
 #===================================
 coerce ES, from HashRef,
     via { Search::Elasticsearch->new( { client => '1_0::Direct', %$_ } ) };

@@ -8,7 +8,7 @@ use MooseX::Types::Moose qw(
 );
 use Elastic::Model::Types qw(
     FieldType IndexMapping TermVectorMapping MultiFields
-    StoreMapping DynamicMapping PathMapping
+    StoreMapping DynamicMapping 
 );
 use Carp;
 
@@ -186,12 +186,7 @@ has 'dynamic' => (
     is  => 'rw'
 );
 
-#===================================
-has 'path' => (
-#===================================
-    isa => PathMapping,
-    is  => 'rw'
-);
+# copy_to ?
 
 # nested
 
@@ -303,8 +298,6 @@ keywords.
 =head2 L<enabled|Elastic::Manual::Attributes/enabled>
 
 =head2 L<dynamic|Elastic::Manual::Attributes/dynamic>
-
-=head2 L<path|Elastic::Manual::Attributes/path> [DEPRECATED]
 
 =head2 L<include_in_parent|Elastic::Manual::Attributes/include_in_parent>
 

@@ -36,16 +36,17 @@ for ( 1 .. 2 ) {
 my ( $conflicts, $errors, $error );
 
 test_bulk( on_conflict => \&on_conflict, on_error => \&on_error );
-ok $conflicts== 2 && $errors == 0 && !$error,
-    'on_conflict: 2 conflicts, 0 errors, no error';
+my $err_str = $error ? 'with error' : 'no error';
+diag "on_conflict: $conflicts conflicts, $errors errors, $err_str";
+ok $conflicts== 2 && $errors == 0 && !$error, 'on_conflict: 2 conflicts, 0 errors, no error';
 
 test_bulk( on_error => \&on_error );
-ok $conflicts== 0 && $errors == 2 && !$error,
-    'on_error: 0 conflicts, 2 errors, no error';
+my $err_str = $error ? 'with error' : 'no error';
+diag "on_conflict: $conflicts conflicts, $errors errors, $err_str";
+ok $conflicts== 0 && $errors == 2 && !$error, 'on_error: 0 conflicts, 2 errors, no error';
 
 test_bulk();
-ok $conflicts== 0 && $errors == 0 && $error,
-    'no handler: 0 conflicts, 0 errors, has error';
+ok $conflicts== 0 && $errors == 0 && $error, 'no handler: 0 conflicts, 0 errors, has error';
 
 #===================================
 sub test_bulk {
@@ -65,11 +66,11 @@ sub test_bulk {
     $bulk->save( $domain->new_doc( user => { id => 3, name => 'three' } ) );
 
     # exists no conflict
-    $bulk->overwrite(
-        $domain->new_doc( user => { id => 4, name => 'four' } ) );
+    $bulk->overwrite( $domain->new_doc( user => { id => 4, name => 'four' } ) );
 
     eval { $bulk->commit };
     $error = $@;
+    #    diag $error if $error;
 }
 
 #===================================

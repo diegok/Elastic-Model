@@ -5,8 +5,9 @@ use namespace::autoclean;
 use Data::Dumper;
 our $Conflict = qr/
     DocumentAlreadyExistsException
+  | document.already.exists
   | :.version.conflict,.current.\[(\d+)\]
-  /x;
+/x;
 
 use Carp;
 
@@ -100,8 +101,7 @@ sub save {
         : 'create';
 
     %args = ( %args, %{ $uid->write_params } );
-    $args{version} = $version
-        if defined $version;
+    $args{version} = $version if $version;
 
     for ( keys %args ) {
         $args{"_$_"} = delete $args{$_};
@@ -149,16 +149,17 @@ sub commit {
         my $doc = $docs->[ $i++ ];
 
         if ( my $error = $result->{error} ) {
+            $error = $error->{reason} if ref $error eq 'HASH'; # ES 2.x
             if ( $on_conflict and $error =~ /$Conflict/ ) {
-                my $uid
-                    = $1
-                    ? Elastic::Model::UID->new( %{ $doc->uid->read_params },
-                    version => $1 )
-                    : $doc->uid->clone;
+                #warn 'Catched: '. $error;
+                my $uid = $1
+                        ? Elastic::Model::UID->new( %{ $doc->uid->read_params }, version => $1 )
+                        : $doc->uid->clone;
                 my $new = $self->model->get_doc( uid => $uid );
                 $on_conflict->( $doc, $new );
             }
             elsif ($on_error) {
+                #warn 'On error: '. $error;
                 $on_error->( $doc, $error );
             }
             else {

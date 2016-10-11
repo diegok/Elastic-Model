@@ -32,10 +32,9 @@ ok $new->reindex(
     'Reindexed myapp to myapp4';
 $new->refresh;
 
-my $view = $model->view->facets(
-    timestamp => { statistical => { field => 'timestamp' } } )->size(0);
-my $old_facet = $view->domain('myapp')->search->facet('timestamp');
-my $new_facet = $view->domain('myapp4')->search->facet('timestamp');
+my $view = $model->view->aggs( timestamp => { stats => { field => 'timestamp' } } )->size(0);
+my $old_facet = $view->domain('myapp')->search->agg('timestamp');
+my $new_facet = $view->domain('myapp4')->search->agg('timestamp');
 
 is $new_facet->{min}, $old_facet->{min} + 1000, 'Min timestamp changed';
 is $new_facet->{max}, $old_facet->{max} + 1000, 'Max timestamp changed';

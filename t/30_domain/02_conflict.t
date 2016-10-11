@@ -46,7 +46,7 @@ ok $u2->save( on_conflict => \&on_conflict ), 'On conflict with diff version';
 
 isa_ok my $u3 = $domain->new_doc( user => { id => 1, name => 'Bob' } ),
     'MyApp::User', 'U3';
-throws_ok sub { $u3->save }, qr/DocumentAlreadyExistsException/,
+throws_ok sub { $u3->save }, qr/DocumentAlreadyExistsException|document_already_exists_exception/,
     'Error saving existing UID';
 ok $u3->save( on_conflict => \&on_conflict_2 ), 'On_conflict with new doc';
 ok $u3->overwrite, 'Overwrite new doc';

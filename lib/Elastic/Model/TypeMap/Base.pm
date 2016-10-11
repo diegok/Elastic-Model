@@ -294,7 +294,6 @@ our %Allowed_Attrs = (
     object => {
         'dynamic'        => 1,
         'enabled'        => 1,
-        'path'           => 1,
         'include_in_all' => 1,
     },
     nested => {
@@ -302,7 +301,6 @@ our %Allowed_Attrs = (
         'include_in_root'   => 1,
         'include_in_all'    => 1,
         'dynamic'           => 1,
-        'path'              => 1,
     },
     ip => {
         'index_name'     => 1,

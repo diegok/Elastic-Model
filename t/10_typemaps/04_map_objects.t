@@ -99,7 +99,6 @@ sub uid {
 #===================================
     +{  type       => "object",
         dynamic    => "strict",
-        path       => 'full',
         properties => {
             id      => { index => "not_analyzed", type => "string" },
             index   => { index => "not_analyzed", type => "string" },

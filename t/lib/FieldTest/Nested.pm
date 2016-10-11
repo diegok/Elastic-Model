@@ -56,7 +56,6 @@ has 'options_attr' => (
     isa               => 'Bar',
     type              => 'nested',
     dynamic           => 'true',
-    path              => 'full',
     include_in_all    => 0,
     include_in_parent => 1,
     include_in_root   => 1,

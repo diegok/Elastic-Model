@@ -72,21 +72,23 @@ sub test_domain {
         [ "post", "user" ],
         "$desc ES mapping has both types";
 
-    ok $index->delete_mapping("post"), "Delete $desc mapping";
-    wait_for_es(1);
+    if ( $ENV{ES_CLIENT_VERSION} < 2 ) { # From version 2 on, mappings cannot be removed
+        ok $index->delete_mapping("post"), "Delete $desc mapping";
+        wait_for_es(1);
 
-    ok !$es->indices->get_mapping( index => $name )->{$name}{post},
-        "$desc mapping deleted";
-    ok $index->update_mapping("post"), "Update $desc mapping";
+        ok !$es->indices->get_mapping( index => $name )->{$name}{post},
+            "$desc mapping deleted";
+        ok $index->update_mapping("post"), "Update $desc mapping";
 
-    ok $es->indices->get_mapping( index => $name, type => "post" ),
-        "Mapping $desc recreated";
+        ok $es->indices->get_mapping( index => $name, type => "post" ),
+            "Mapping $desc recreated";
 
-    throws_ok sub { $index->delete_mapping("foo") }, qr/Missing/,
-        "Non-existent mapping throws error";
+        throws_ok sub { $index->delete_mapping("foo") }, qr/Missing/,
+            "Non-existent mapping throws error";
 
-    ok $index->delete_mapping( "foo", { ignore => 404 } ),
-        "Ignore missing mapping";
+        ok $index->delete_mapping( "foo", { ignore => 404 } ),
+            "Ignore missing mapping";
+    }
 
     ## Refresh ##
     ok $index->refresh, "$desc refreshed";
