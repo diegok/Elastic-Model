@@ -101,7 +101,10 @@ sub save {
         : 'create';
 
     %args = ( %args, %{ $uid->write_params } );
-    $args{version} = $version if $version;
+    if ( defined $version ) {
+        if ( $version ) { $args{version} = $version }
+        else            { delete $args{version} }
+    }
 
     for ( keys %args ) {
         $args{"_$_"} = delete $args{$_};

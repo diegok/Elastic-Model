@@ -36,13 +36,9 @@ for ( 1 .. 2 ) {
 my ( $conflicts, $errors, $error );
 
 test_bulk( on_conflict => \&on_conflict, on_error => \&on_error );
-my $err_str = $error ? 'with error' : 'no error';
-diag "on_conflict: $conflicts conflicts, $errors errors, $err_str";
 ok $conflicts== 2 && $errors == 0 && !$error, 'on_conflict: 2 conflicts, 0 errors, no error';
 
 test_bulk( on_error => \&on_error );
-my $err_str = $error ? 'with error' : 'no error';
-diag "on_conflict: $conflicts conflicts, $errors errors, $err_str";
 ok $conflicts== 0 && $errors == 2 && !$error, 'on_error: 0 conflicts, 2 errors, no error';
 
 test_bulk();
@@ -70,7 +66,6 @@ sub test_bulk {
 
     eval { $bulk->commit };
     $error = $@;
-    #    diag $error if $error;
 }
 
 #===================================
