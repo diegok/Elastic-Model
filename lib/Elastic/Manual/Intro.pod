@@ -33,7 +33,7 @@ Clinton Gormley, author of Elastic::Model have said about the future of this lib
     and what bits you find annoying. Perhaps the code can be split
     out into smaller more useful chunks.
 
-Only <a few of Us told him how we use it|https://github.com/clintongormley/Elastic-Model/issues/42>
+Only a few of Us told him how we use it (https://github.com/clintongormley/Elastic-Model/issues/42)
 and from my point of view, after reading there and talking with other users,
 Clinton is right when he says that Elastic::Model is doing too much...
 I've started to make some minimal changes to make it work with 2.4 and it
