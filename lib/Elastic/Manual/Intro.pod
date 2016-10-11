@@ -7,7 +7,7 @@ __END__
 
 =head1 POSSIBLE FUTURE OF ELASTIC::MODEL - PLEASE READ
 
-Clinton Gormley, author of Elastic::Model have said:
+Clinton Gormley, author of Elastic::Model have said about the future of this lib:
 
     Hi all users of Elastic::Model
 
@@ -33,18 +33,19 @@ Clinton Gormley, author of Elastic::Model have said:
     and what bits you find annoying. Perhaps the code can be split
     out into smaller more useful chunks.
 
-Only a few of Us told him how we use it and from my point of view, after
-reading there and talking with other users, Clinton is right when he says
-that Elastic::Model is doing too much...
+Only <a few of Us told him how we use it|https://github.com/clintongormley/Elastic-Model/issues/42>
+and from my point of view, after reading there and talking with other users,
+Clinton is right when he says that Elastic::Model is doing too much...
 I've started to make some minimal changes to make it work with 2.4 and it
 was really easy to make our company code work on top of this patched version,
 but a lot of tests were failing and working on this I've discovered things
 that we don't use and will never use, some of that I still don't completely
-understand, but I was able to make almost all tests pass using 2.4
+understand. Finally I was able to make almost all tests pass using 2.4 and I'm
+still working on it.
 
-I need to test back on 1.x but now I can see I can make it. On the other hand
+I need to test back on 1.x but now I can see this will work. On the other hand
 I've discovered that maintaining support for 0.9 will be a harder work that
-I'm not interested so my plan is to completely remove support for it and try
+I'm not interested to do, so my plan is to completely remove support for it and try
 to reach a point where I can request Clinton to merge my changes to make a new
 CPAN release supporting 2.x possible.
 
