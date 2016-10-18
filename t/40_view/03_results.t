@@ -11,8 +11,6 @@ use lib 't/lib';
 our ( $es, $store );
 do 'es.pl';
 
-our $is_090 = $es->isa('Search::Elasticsearch::Client::0_90::Direct');
-
 use_ok 'MyApp' || print 'Bail out';
 
 my $model = new_ok( 'MyApp', [ es => $es ], 'Model' );
@@ -251,10 +249,7 @@ sub test_single {
             is $r->uid->is_partial, 1, "$desc $name as partials is partial";
             ok $r->name, "$desc $name as partials has name";
 
-        SKIP: {
-                skip "Partials not supported in 0.90", 1 if $is_090;
-                ok !$r->{timestamp}, "$desc $name as partials has no timestamp";
-            }
+            ok !$r->{timestamp}, "$desc $name as partials has no timestamp";
         }
         else {
             is my $r = $it->$el_method, undef, "$desc $el_method - undef";

@@ -23,7 +23,7 @@ if ( $ENV{ES} ) {
     # Fallback for old servers/drivers
     my ($version) = $es->info->{version}{number} =~ /^(\d+)/;
     $ENV{ES_CLIENT_VERSION} = $version;
-    if ( my $client = $version < 1 ? '0_90::Direct' : $version < 2 ? '1_0::Direct' : 0 ) {
+    if ( my $client = $version < 2 ? '1_0::Direct' : 0 ) {
         diag "Selected client: $client";
         $es = Search::Elasticsearch->new(
             nodes    => $ENV{ES},

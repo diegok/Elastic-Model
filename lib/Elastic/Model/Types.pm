@@ -17,7 +17,6 @@ use MooseX::Types -declare => [ qw(
         ES
         ES_2x
         ES_1x
-        ES_90
         FieldType
         GeoPoint
         HighlightArgs
@@ -73,10 +72,9 @@ while ( my $type = shift @enums ) {
 
 class_type ES_2x, { class => 'Search::Elasticsearch::Client::2_0::Direct' };
 class_type ES_1x, { class => 'Search::Elasticsearch::Client::1_0::Direct' };
-class_type ES_90, { class => 'Search::Elasticsearch::Client::0_90::Direct' };
 
 #===================================
-subtype ES(), as ES_2x | ES_1x | ES_90;
+subtype ES(), as ES_2x | ES_1x;
 #===================================
 coerce ES, from HashRef,
     via { Search::Elasticsearch->new( { client => '1_0::Direct', %$_ } ) };

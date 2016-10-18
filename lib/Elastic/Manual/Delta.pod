@@ -12,6 +12,14 @@ a focus on things that affect backwards compatibility. This does duplicate
 data from the Changes file, but aims to provide more details and when possible
 workarounds.
 
+=head2 0.53
+
+Elastic::Model is now compatible with Elasticsearch 2.x. which it's the default client
+of L<Search::Elasticsearch>. You should specify the client version explicitly if you
+use Elasticsearch 1.x the same way you did for version 0.52. On the other hand, support
+for Elasticsearch 0.90.x is completely removed so you should not upgrade further than
+0.52 if you still use that version.
+
 =head2 0.52
 
 Elastic::Model is not compatible with Elasticsearch 2.x.  L<Search::Elasticsearch>,

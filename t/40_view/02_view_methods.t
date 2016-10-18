@@ -28,11 +28,8 @@ SKIP: {
         'Elastic::Model::View', 'View facets';
 }
 
-SKIP: {
-    skip "aggs not supported in 0.90", 1 if $ENV{ES_CLIENT_VERSION} < 1;
-    isa_ok $view = $view->aggs( name => { terms => { field => 'name' } } ),
-        'Elastic::Model::View', 'View aggs';
-}
+isa_ok $view = $view->aggs( name => { terms => { field => 'name' } } ),
+    'Elastic::Model::View', 'View aggs';
 
 isa_ok my $results = $view->search, 'Elastic::Model::Results', 'Search';
 
@@ -51,11 +48,8 @@ SKIP: {
 is 0 + ( $results->all ), 10, 'Search is finite';
 isa_ok $results->first, 'Elastic::Model::Result', 'Search first';
 
-SKIP: {
-    skip "aggs not supported in 0.90", 2 if $ENV{ES_CLIENT_VERSION} < 1;
-    isa_ok $results->aggs, 'HASH', 'Search aggs';
-    isa_ok $results->agg('name'), 'HASH', 'Search named agg';
-}
+isa_ok $results->aggs, 'HASH', 'Search aggs';
+isa_ok $results->agg('name'), 'HASH', 'Search named agg';
 
 ## SCROLL ##
 isa_ok $results = $view->scroll, 'Elastic::Model::Results::Scrolled', 'Scroll';
@@ -69,11 +63,8 @@ SKIP: {
     isa_ok $results->facets, 'HASH', 'Scroll facets';
     isa_ok $results->facet('name'), 'HASH', 'Scroll named facet';
 }
-SKIP: {
-    skip "aggs not supported in 0.90", 2 if $ENV{ES_CLIENT_VERSION} < 1;
-    isa_ok $results->aggs, 'HASH', 'Scroll aggs';
-    isa_ok $results->agg('name'), 'HASH', 'Scroll named agg';
-}
+isa_ok $results->aggs, 'HASH', 'Scroll aggs';
+isa_ok $results->agg('name'), 'HASH', 'Scroll named agg';
 is 0 + ( $results->all ), 196, 'Scroll - all results';
 isa_ok $results->first, 'Elastic::Model::Result', 'Scroll first';
 
