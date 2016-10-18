@@ -77,15 +77,15 @@ class_type ES_1x, { class => 'Search::Elasticsearch::Client::1_0::Direct' };
 subtype ES(), as ES_2x | ES_1x;
 #===================================
 coerce ES, from HashRef,
-    via { Search::Elasticsearch->new( { client => '1_0::Direct', %$_ } ) };
+    via { Search::Elasticsearch->new( { client => '2_0::Direct', %$_ } ) };
 coerce ES, from Str, via {
     s/^:/127.0.0.1:/;
-    Search::Elasticsearch->new( client => '1_0::Direct', nodes => $_ );
+    Search::Elasticsearch->new( client => '2_0::Direct', nodes => $_ );
 };
 coerce ES, from ArrayRef, via {
     my @nodes = @$_;
     s/^:/127.0.0.1:/ for @nodes;
-    Search::Elasticsearch->new( client => '1_0::Direct', nodes => \@nodes );
+    Search::Elasticsearch->new( client => '2_0::Direct', nodes => \@nodes );
 };
 
 #===================================

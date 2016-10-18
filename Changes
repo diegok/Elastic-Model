@@ -1,5 +1,5 @@
 0.53    2016-xx-xx
-        Elastic::Model now supports Elasticsearch 2.x
+        Elastic::Model now supports Elasticsearch 2.x and defaults to the 2_0::Direct client.
 
         Compulsive usage of meta-attribute _timestamp was removed as it's deprecated
         and it was never documented nor tested.

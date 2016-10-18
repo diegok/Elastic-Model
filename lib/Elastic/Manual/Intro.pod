@@ -39,15 +39,14 @@ Clinton is right when he says that Elastic::Model is doing too much...
 I've started to make some minimal changes to make it work with 2.4 and it
 was really easy to make our company code work on top of this patched version,
 but a lot of tests were failing and working on this I've discovered things
-that we don't use and will never use, some of that I still don't completely
-understand. Finally I was able to make almost all tests pass using 2.4 and I'm
-still working on it.
+that we don't use and will never use, and probably I don't understand.
 
-I need to test back on 1.x but now I can see this will work. On the other hand
-I've discovered that maintaining support for 0.9 will be a harder work that
-I'm not interested to do, so my plan is to completely remove support for it and try
-to reach a point where I can request Clinton to merge my changes to make a new
-CPAN release supporting 2.x possible.
+I was able to make all tests to pass using Elasticsearch 2.4.0 and 1.7.4.
+
+On the other hand I've discovered that maintaining support for 0.9 will be a
+harder work that I'm not interested to do, so I did completely removed support
+for it and try and I'm trying to reach a point where I can request Clinton to
+merge my changes to make a new CPAN release supporting 2.x possible.
 
 I would be very happy if some other users can test their code on this branch
 and I'm very open to receive any help.
@@ -60,12 +59,12 @@ You need a recent version of Java installed, then download the current
 stable release of Elasticsearch from L<http://www.Elasticsearch.org/download/>.
 For instance:
 
-    curl -L -O https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-1.7.4.tar.gz
-    tar -xzf elasticsearch-1.7.4.tar.gz
+    curl -L -O https://github.com/downloads/elasticsearch/elasticsearch/elasticsearch-2.4.0.tar.gz
+    tar -xzf elasticsearch-2.4.0.tar.gz
 
-B<< Note: This version of Elastic::Model is intended for Elasticsearch 1.x
-. However, it can be used with Elasticsearch 0.90.x in "compatibility mode".
-See L<Elastic::Manual::Delta> for instructions. >>
+B<< Note: This version of Elastic::Model is intended for Elasticsearch 2.x and
+can be used with Elasticsearch 1.x setting the 1.x client on initialization.
+See L<Elastic::Manual::Delta> for more details. >>
 
 =head2 Install Elastic::Model
 
@@ -78,7 +77,7 @@ against a local Elasticsearch cluster.
 
 =head2 Start Elasticsearch
 
-    cd elasticsearch-1.6.0/
+    cd elasticsearch-2.4.0/
     ./bin/elasticsearch       # -d starts the server in the background
 
 You now have a running Elasticsearch cluster with one node. You can test that
@@ -166,7 +165,6 @@ Elasticsearch cluster.  The last line is the equivalent of:
 
     use Search::Elasticsearch();
     my $es     = Search::Elasticsearch->new(
-        client => '1_0::Direct',
         nodes => 'localhost:9200'
     );
     my $model  = MyApp->new( es => $es );
