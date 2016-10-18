@@ -638,8 +638,6 @@ sub map_class {
         %{ $meta->mapping },
         $self->typemap->class_mapping($class),
         dynamic           => 'strict',
-        #TODO: replace this for a real timestamp field on Doc as it's removed on 5.x
-        _timestamp        => { enabled => 1 }, #, path => 'timestamp' },
         numeric_detection => 1,
     );
     delete $mapping{type};

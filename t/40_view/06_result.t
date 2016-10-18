@@ -32,7 +32,7 @@ isa_ok
 
 cmp_deeply
     [ keys %{ $result->result } ],
-    bag(qw(_id _index _score _source _type _version _timestamp)),
+    bag(qw(_id _index _score _source _type _version)),
     'Result->result';
 
 is $result->score, 1, 'Result->score';
@@ -77,7 +77,7 @@ isa_ok $result = $view->queryb( { name => 'Aardwolf' } )    #
 
 cmp_deeply [ keys %{ $result->result } ], bag(
     qw(_id _index _score _type _version fields highlight
-        _explanation _node _shard _timestamp)
+        _explanation _node _shard)
     ),
     'AdvResult->result';
 
