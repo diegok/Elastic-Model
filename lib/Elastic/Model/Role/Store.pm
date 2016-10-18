@@ -169,7 +169,7 @@ sub get_aliases {
 #===================================
     my $self = shift;
     my %args = _cleanup(@_);
-    return $self->es->indices->get_aliases( ignore => 404, %args ) || {};
+    return $self->es->indices->get_alias( ignore => 404, ignore_unavailable => 1, %args ) || {};
 }
 
 #===================================
@@ -448,7 +448,7 @@ Updates the settings of the specified index, passing C<@args> to L<Search::Elast
 
     $response = $store->get_aliases(@args);
 
-Retrieves the aliases for the specified indices, passing C<@args> to L<Search::Elasticsearch::Client::Direct::Indices/get_aliases()>.
+Retrieves the aliases for the specified indices, passing C<@args> to L<Search::Elasticsearch::Client::Direct::Indices/get_alias()>.
 
 =head2 put_aliases()
 
