@@ -45,7 +45,7 @@ I was able to make all tests to pass using Elasticsearch 2.4.0 and 1.7.4.
 
 On the other hand I've discovered that maintaining support for 0.9 will be a
 harder work that I'm not interested to do, so I did completely removed support
-for it and try and I'm trying to reach a point where I can request Clinton to
+for it and I'm trying to reach a point where I can request Clinton to
 merge my changes to make a new CPAN release supporting 2.x possible.
 
 I would be very happy if some other users can test their code on this branch
