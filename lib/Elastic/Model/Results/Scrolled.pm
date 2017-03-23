@@ -4,13 +4,14 @@ use Carp;
 use Moose;
 with 'Elastic::Model::Role::Results';
 use MooseX::Types::Moose qw(Int);
+use Elastic::Model::Types qw(ES_SCROLL);
 
 use namespace::autoclean;
 
 #===================================
 has '_scroll' => (
 #===================================
-    isa    => 'Search::Elasticsearch::Scroll',
+    isa    => ES_SCROLL,
     is     => 'ro',
     writer => '_set_scroll',
 );

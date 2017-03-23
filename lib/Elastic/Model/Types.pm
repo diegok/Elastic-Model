@@ -8,33 +8,35 @@ use MooseX::Types::Moose qw(HashRef ArrayRef Str Bool Num Int Defined Any);
 use MooseX::Types::Structured qw (Dict Optional Map);
 use namespace::autoclean;
 
-use MooseX::Types -declare => [ qw(
-        ArrayRefOfStr
-        Binary
-        Consistency
-        CoreFieldType
-        DynamicMapping
-        ES
-        ES_2x
-        ES_1x
-        FieldType
-        GeoPoint
-        HighlightArgs
-        IndexMapping
-        IndexNames
-        Keyword
-        Latitude
-        Longitude
-        MultiField
-        MultiFields
-        Replication
-        SortArgs
-        StoreMapping
-        TermVectorMapping
-        Timestamp
-        UID
-        )
-];
+use MooseX::Types -declare => [qw(
+    ArrayRefOfStr
+    Binary
+    Consistency
+    CoreFieldType
+    DynamicMapping
+    ES
+    ES_2x
+    ES_1x
+    ES_SCROLL
+    ES_SCROLL_2x
+    ES_SCROLL_1x
+    FieldType
+    GeoPoint
+    HighlightArgs
+    IndexMapping
+    IndexNames
+    Keyword
+    Latitude
+    Longitude
+    MultiField
+    MultiFields
+    Replication
+    SortArgs
+    StoreMapping
+    TermVectorMapping
+    Timestamp
+    UID
+)];
 
 my @enums = (
     FieldType,
@@ -70,8 +72,8 @@ while ( my $type = shift @enums ) {
     );
 }
 
-class_type ES_2x, { class => 'Search::Elasticsearch::Client::2_0::Direct' };
 class_type ES_1x, { class => 'Search::Elasticsearch::Client::1_0::Direct' };
+class_type ES_2x, { class => 'Search::Elasticsearch::Client::2_0::Direct' };
 
 #===================================
 subtype ES(), as ES_2x | ES_1x;
@@ -88,7 +90,10 @@ coerce ES, from ArrayRef, via {
     Search::Elasticsearch->new( client => '2_0::Direct', nodes => \@nodes );
 };
 
-#===================================
+class_type ES_SCROLL_1x, { class => 'Search::Elasticsearch::Client::1_0::Scroll' };
+class_type ES_SCROLL_2x, { class => 'Search::Elasticsearch::Client::2_0::Scroll' };
+subtype ES_SCROLL(), as ES_SCROLL_2x | ES_SCROLL_1x;
+
 subtype StoreMapping, as enum( [ 'yes', 'no' ] );
 #===================================
 coerce StoreMapping, from Any, via { $_ ? 'yes' : 'no' };
